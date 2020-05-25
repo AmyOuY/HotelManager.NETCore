@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,9 +13,16 @@ namespace OHMDataManager.Library.Internal.DataAccess
 {
     public class SqlDataAccess
     {
-        public string GetConnectionString(string connectionStringName)
+        private readonly IConfiguration _config;
+
+        public SqlDataAccess(IConfiguration config)
         {
-            return ConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
+            _config = config;
+        }
+
+        public string GetConnectionString(string connectionStringName)
+        {            
+            return _config.GetConnectionString(connectionStringName);
         }
 
 

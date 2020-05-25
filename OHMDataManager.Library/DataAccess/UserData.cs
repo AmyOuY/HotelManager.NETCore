@@ -1,4 +1,5 @@
-﻿using OHMDataManager.Library.Internal.DataAccess;
+﻿using Microsoft.Extensions.Configuration;
+using OHMDataManager.Library.Internal.DataAccess;
 using OHMDataManager.Library.Models;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,16 @@ namespace OHMDataManager.Library.DataAccess
 {
     public class UserData
     {
+        private readonly IConfiguration _config;
+
+        public UserData(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public UserModel GetUserById(string Id)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             var output = sql.LoadData<UserModel, dynamic>("dbo.spUserLookUp", new { Id }, "OHMData").FirstOrDefault();
 

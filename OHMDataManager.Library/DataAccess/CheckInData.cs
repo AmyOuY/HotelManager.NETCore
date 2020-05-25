@@ -1,4 +1,5 @@
-﻿using OHMDataManager.Library.Internal.DataAccess;
+﻿using Microsoft.Extensions.Configuration;
+using OHMDataManager.Library.Internal.DataAccess;
 using OHMDataManager.Library.Models;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,16 @@ namespace OHMDataManager.Library.DataAccess
 {
     public class CheckInData
     {
+        private readonly IConfiguration _config;
+
+        public CheckInData(IConfiguration config)
+        {
+            _config = config;
+        }
 
         public List<CheckInModel> GetCheckIns()
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             var output = sql.LoadData<CheckInModel, dynamic>("dbo.spCheckIn_GetAll", new { }, "OHMData");
 
@@ -23,7 +30,7 @@ namespace OHMDataManager.Library.DataAccess
 
         public CheckInModel GetCheckIn(ClientInfo cInfo)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             var output = sql.LoadData<CheckInModel, dynamic>("dbo.spCheckInLookUp", new { cInfo.Client, cInfo.Phone }, "OHMData").FirstOrDefault();
 
@@ -33,7 +40,7 @@ namespace OHMDataManager.Library.DataAccess
 
         public int GetCheckInID(CheckInModel checkIn)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             var output = sql.LoadData<int, dynamic>("dbo.spCheckInIDLookUp", new { checkIn.Client, checkIn.Phone }, "OHMData").FirstOrDefault();
 
@@ -43,7 +50,7 @@ namespace OHMDataManager.Library.DataAccess
 
         public void SaveCheckIn(CheckInModel checkIn)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             sql.SaveData("dbo.spCheckIn_Insert", checkIn, "OHMData");
         }
@@ -51,7 +58,7 @@ namespace OHMDataManager.Library.DataAccess
 
         public void UpdateCheckIn(CheckInModel checkIn)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             sql.SaveData("dbo.spCheckIn_Update", checkIn, "OHMData");
         }
@@ -59,7 +66,7 @@ namespace OHMDataManager.Library.DataAccess
 
         public void DeleteCheckIn(int id)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             sql.DeleteData("dbo.spCheckIn_Remove", new { id }, "OHMData");
         }

@@ -1,4 +1,5 @@
-﻿using OHMDataManager.Library.Internal.DataAccess;
+﻿using Microsoft.Extensions.Configuration;
+using OHMDataManager.Library.Internal.DataAccess;
 using OHMDataManager.Library.Models;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,16 @@ namespace OHMDataManager.Library.DataAccess
 {
     public class SaleData
     {
+        private readonly IConfiguration _config;
+
+        public SaleData(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public List<SaleReportModel> GetSaleReport()
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             var output = sql.LoadData<SaleReportModel, dynamic>("dbo.spSaleReport", new { }, "OHMData");
 

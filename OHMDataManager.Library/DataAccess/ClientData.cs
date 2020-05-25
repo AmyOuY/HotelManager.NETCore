@@ -1,4 +1,5 @@
-﻿using OHMDataManager.Library.Internal.DataAccess;
+﻿using Microsoft.Extensions.Configuration;
+using OHMDataManager.Library.Internal.DataAccess;
 using OHMDataManager.Library.Models;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,16 @@ namespace OHMDataManager.Library.DataAccess
 {
     public class ClientData
     {
+        private readonly IConfiguration _config;
+
+        public ClientData(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public List<ClientModel> GetClients()
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             var output = sql.LoadData<ClientModel, dynamic>("dbo.spClient_GetAll", new { }, "OHMData");
 
@@ -22,7 +30,7 @@ namespace OHMDataManager.Library.DataAccess
 
         public int GetClientID(ClientModel client)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             var output = sql.LoadData<int, dynamic>("dbo.spClientIDLookUp", new { client.FirstName, client.LastName, client.Phone }, "OHMData").FirstOrDefault();
 
@@ -32,7 +40,7 @@ namespace OHMDataManager.Library.DataAccess
 
         public void SaveClient(ClientModel client)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             sql.SaveData("dbo.spClient_Insert", client, "OHMData");
         }
@@ -40,7 +48,7 @@ namespace OHMDataManager.Library.DataAccess
 
         public void UpdateClient(ClientModel client)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             sql.SaveData("dbo.spClient_Update", client, "OHMData");
         }
@@ -48,7 +56,7 @@ namespace OHMDataManager.Library.DataAccess
 
         public void DeleteClient(int id)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             sql.DeleteData("dbo.spClient_Remove", new { id }, "OHMData");
         }
