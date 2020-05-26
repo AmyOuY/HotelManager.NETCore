@@ -9,20 +9,18 @@ using System.Threading.Tasks;
 
 namespace OHMDataManager.Library.DataAccess
 {
-    public class RoomData
+    public class RoomData : IRoomData
     {
-        private readonly IConfiguration _config;
+        private readonly ISqlDataAccess _sql;
 
-        public RoomData(IConfiguration config)
+        public RoomData(ISqlDataAccess sql)
         {
-            _config = config;
+            _sql = sql;
         }
 
         public List<RoomModel> GetRooms()
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            var output = sql.LoadData<RoomModel, dynamic>("dbo.spRoom_GetAll", new { }, "OHMData");
+            var output = _sql.LoadData<RoomModel, dynamic>("dbo.spRoom_GetAll", new { }, "OHMData");
 
             return output;
         }
@@ -31,9 +29,7 @@ namespace OHMDataManager.Library.DataAccess
 
         public RoomModel GetRoom(RoomModel room)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            var output = sql.LoadData<RoomModel, dynamic>("dbo.spRoomLookUp", new { room.RoomNumber }, "OHMData").FirstOrDefault();
+            var output = _sql.LoadData<RoomModel, dynamic>("dbo.spRoomLookUp", new { room.RoomNumber }, "OHMData").FirstOrDefault();
 
             return output;
         }
@@ -41,9 +37,7 @@ namespace OHMDataManager.Library.DataAccess
 
         public int GetRoomID(RoomModel room)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            var output = sql.LoadData<int, dynamic>("dbo.spRoomIDLookUp", new { room.RoomNumber }, "OHMData").FirstOrDefault();
+            var output = _sql.LoadData<int, dynamic>("dbo.spRoomIDLookUp", new { room.RoomNumber }, "OHMData").FirstOrDefault();
 
             return output;
         }
@@ -51,24 +45,19 @@ namespace OHMDataManager.Library.DataAccess
 
         public void SaveRoom(RoomModel room)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            sql.SaveData("dbo.spRoom_Insert", room, "OHMData");
+            _sql.SaveData("dbo.spRoom_Insert", room, "OHMData");
         }
 
 
         public void UpdateRoom(RoomModel room)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-            sql.SaveData("dbo.spRoom_Update", room, "OHMData");
+            _sql.SaveData("dbo.spRoom_Update", room, "OHMData");
         }
 
 
         public void DeleteRoom(int id)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            sql.DeleteData("dbo.spRoom_Remove", new { id }, "OHMData");
+            _sql.DeleteData("dbo.spRoom_Remove", new { id }, "OHMData");
         }
     }
 }

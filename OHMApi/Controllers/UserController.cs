@@ -21,16 +21,16 @@ namespace OHMApi.Controllers
     public class UserController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly IConfiguration _config;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUserData _data;
 
         public UserController(ApplicationDbContext context,
                               UserManager<IdentityUser> userManager,
-                              IConfiguration config)
+                              IUserData data)
         {
             _context = context;
-            _config = config;
             _userManager = userManager;
+            _data = data;
         }
 
 
@@ -39,9 +39,7 @@ namespace OHMApi.Controllers
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            UserData data = new UserData(_config);
-
-            return data.GetUserById(userId);
+            return _data.GetUserById(userId);
         }
 
 

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OHMDataManager.Library.Internal.DataAccess
 {
-    public class SqlDataAccess
+    public class SqlDataAccess : ISqlDataAccess
     {
         private readonly IConfiguration _config;
 
@@ -21,7 +21,7 @@ namespace OHMDataManager.Library.Internal.DataAccess
         }
 
         public string GetConnectionString(string connectionStringName)
-        {            
+        {
             return _config.GetConnectionString(connectionStringName);
         }
 

@@ -9,20 +9,18 @@ using System.Threading.Tasks;
 
 namespace OHMDataManager.Library.DataAccess
 {
-    public class ClientData
+    public class ClientData : IClientData
     {
-        private readonly IConfiguration _config;
+        private readonly ISqlDataAccess _sql;
 
-        public ClientData(IConfiguration config)
+        public ClientData(ISqlDataAccess sql)
         {
-            _config = config;
+            _sql = sql;
         }
 
         public List<ClientModel> GetClients()
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            var output = sql.LoadData<ClientModel, dynamic>("dbo.spClient_GetAll", new { }, "OHMData");
+            var output = _sql.LoadData<ClientModel, dynamic>("dbo.spClient_GetAll", new { }, "OHMData");
 
             return output;
         }
@@ -30,9 +28,7 @@ namespace OHMDataManager.Library.DataAccess
 
         public int GetClientID(ClientModel client)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            var output = sql.LoadData<int, dynamic>("dbo.spClientIDLookUp", new { client.FirstName, client.LastName, client.Phone }, "OHMData").FirstOrDefault();
+            var output = _sql.LoadData<int, dynamic>("dbo.spClientIDLookUp", new { client.FirstName, client.LastName, client.Phone }, "OHMData").FirstOrDefault();
 
             return output;
         }
@@ -40,25 +36,19 @@ namespace OHMDataManager.Library.DataAccess
 
         public void SaveClient(ClientModel client)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            sql.SaveData("dbo.spClient_Insert", client, "OHMData");
+            _sql.SaveData("dbo.spClient_Insert", client, "OHMData");
         }
 
 
         public void UpdateClient(ClientModel client)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            sql.SaveData("dbo.spClient_Update", client, "OHMData");
+            _sql.SaveData("dbo.spClient_Update", client, "OHMData");
         }
 
 
         public void DeleteClient(int id)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            sql.DeleteData("dbo.spClient_Remove", new { id }, "OHMData");
+            _sql.DeleteData("dbo.spClient_Remove", new { id }, "OHMData");
         }
     }
 }

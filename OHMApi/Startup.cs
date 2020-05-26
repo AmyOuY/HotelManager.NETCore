@@ -15,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using OHMDataManager.Library.Internal.DataAccess;
+using OHMDataManager.Library.DataAccess;
 
 namespace OHMApi
 {
@@ -38,6 +40,16 @@ namespace OHMApi
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            // Personal services
+            services.AddTransient<ISqlDataAccess, SqlDataAccess>();
+            services.AddTransient<ICheckInData, CheckInData>();
+            services.AddTransient<ICheckOutData, CheckOutData>();
+            services.AddTransient<IClientData, ClientData>();
+            services.AddTransient<IRoomData, RoomData>();
+            services.AddTransient<ISaleData, SaleData>();
+            services.AddTransient<IUserData, UserData>();
+
 
             services.AddAuthentication(options =>
             {

@@ -16,19 +16,17 @@ namespace OHMApi.Controllers
     [Authorize(Roles = "Receptionist")]
     public class CheckInController : ControllerBase
     {
-        private readonly IConfiguration _config;
+        private readonly ICheckInData _data;
 
-        public CheckInController(IConfiguration config)
+        public CheckInController(ICheckInData data)
         {
-            _config = config;
+            _data = data;
         }
 
         [HttpGet]
         public List<CheckInModel> Get()
         {
-            CheckInData data = new CheckInData(_config);
-
-            return data.GetCheckIns();
+            return _data.GetCheckIns();
         }
 
 
@@ -36,9 +34,7 @@ namespace OHMApi.Controllers
         [HttpPost]
         public CheckInModel PostForCheckIn(ClientInfo cInfo)
         {
-            CheckInData data = new CheckInData(_config);
-
-            return data.GetCheckIn(cInfo);
+            return _data.GetCheckIn(cInfo);
         }
 
 
@@ -47,33 +43,28 @@ namespace OHMApi.Controllers
         [HttpPost]
         public int PostForCheckInID(CheckInModel checkIn)
         {
-            CheckInData data = new CheckInData(_config);
-
-            return data.GetCheckInID(checkIn);
+            return _data.GetCheckInID(checkIn);
         }
 
 
         [HttpPost]
         public void Post(CheckInModel checkIn)
         {
-            CheckInData data = new CheckInData(_config);
-            data.SaveCheckIn(checkIn);
+            _data.SaveCheckIn(checkIn);
         }
 
 
         [HttpPut]
         public void Put(int id, CheckInModel checkIn)
         {
-            CheckInData data = new CheckInData(_config);
-            data.UpdateCheckIn(checkIn);
+            _data.UpdateCheckIn(checkIn);
         }
 
 
         [HttpDelete]
         public void Delete(int id)
         {
-            CheckInData data = new CheckInData(_config);
-            data.DeleteCheckIn(id);
+            _data.DeleteCheckIn(id);
         }
     }
 }

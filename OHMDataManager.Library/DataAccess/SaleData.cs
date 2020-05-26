@@ -9,20 +9,18 @@ using System.Threading.Tasks;
 
 namespace OHMDataManager.Library.DataAccess
 {
-    public class SaleData
+    public class SaleData : ISaleData
     {
-        private readonly IConfiguration _config;
+        private readonly ISqlDataAccess _sql;
 
-        public SaleData(IConfiguration config)
+        public SaleData(ISqlDataAccess sql)
         {
-            _config = config;
+            _sql = sql;
         }
 
         public List<SaleReportModel> GetSaleReport()
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            var output = sql.LoadData<SaleReportModel, dynamic>("dbo.spSaleReport", new { }, "OHMData");
+            var output = _sql.LoadData<SaleReportModel, dynamic>("dbo.spSaleReport", new { }, "OHMData");
 
             return output;
         }

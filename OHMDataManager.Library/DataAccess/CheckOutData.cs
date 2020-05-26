@@ -9,20 +9,18 @@ using System.Threading.Tasks;
 
 namespace OHMDataManager.Library.DataAccess
 {
-    public class CheckOutData
+    public class CheckOutData : ICheckOutData
     {
-        private readonly IConfiguration _config;
+        private readonly ISqlDataAccess _sql;
 
-        public CheckOutData(IConfiguration config)
+        public CheckOutData(ISqlDataAccess sql)
         {
-            _config = config;
+            _sql = sql;
         }
 
         public void SaveCheckOut(CheckOutModel checkOut)
         {
-            SqlDataAccess data = new SqlDataAccess(_config);
-
-            data.SaveData("dbo.spCheckOut_Insert", checkOut, "OHMData");
+            _sql.SaveData("dbo.spCheckOut_Insert", checkOut, "OHMData");
         }
     }
 }

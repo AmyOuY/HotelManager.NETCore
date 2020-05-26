@@ -16,20 +16,18 @@ namespace OHMApi.Controllers
     [Authorize(Roles = "Manager,Receptionist")]
     public class RoomController : ControllerBase
     {
-        private readonly IConfiguration _config;
+        private readonly IRoomData _data;
 
-        public RoomController(IConfiguration config)
+        public RoomController(IRoomData data)
         {
-            _config = config;
+            _data = data;
         }
 
 
         [HttpGet]
         public List<RoomModel> Get()
         {
-            RoomData data = new RoomData(_config);
-
-            return data.GetRooms();
+            return _data.GetRooms();
         }
 
 
@@ -37,9 +35,7 @@ namespace OHMApi.Controllers
         [HttpPost]
         public RoomModel PostForRoom(RoomModel room)
         {
-            RoomData data = new RoomData(_config);
-
-            return data.GetRoom(room);
+            return _data.GetRoom(room);
         }
 
 
@@ -47,33 +43,28 @@ namespace OHMApi.Controllers
         [HttpPost]
         public int PostForRoomID(RoomModel room)
         {
-            RoomData data = new RoomData(_config);
-
-            return data.GetRoomID(room);
+            return _data.GetRoomID(room);
         }
 
 
         [HttpPost]
         public void Post(RoomModel room)
         {
-            RoomData data = new RoomData(_config);
-            data.SaveRoom(room);
+            _data.SaveRoom(room);
         }
 
 
         [HttpPut]
         public void Put(int id, RoomModel room)
         {
-            RoomData data = new RoomData(_config);
-            data.UpdateRoom(room);
+            _data.UpdateRoom(room);
         }
 
 
         [HttpDelete]
         public void Delete(int id)
         {
-            RoomData data = new RoomData(_config);
-            data.DeleteRoom(id);
+            _data.DeleteRoom(id);
         }
     }
 }

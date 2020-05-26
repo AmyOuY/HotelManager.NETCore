@@ -9,20 +9,18 @@ using System.Threading.Tasks;
 
 namespace OHMDataManager.Library.DataAccess
 {
-    public class CheckInData
+    public class CheckInData : ICheckInData
     {
-        private readonly IConfiguration _config;
+        private readonly ISqlDataAccess _sql;
 
-        public CheckInData(IConfiguration config)
+        public CheckInData(ISqlDataAccess sql)
         {
-            _config = config;
+            _sql = sql;
         }
 
         public List<CheckInModel> GetCheckIns()
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            var output = sql.LoadData<CheckInModel, dynamic>("dbo.spCheckIn_GetAll", new { }, "OHMData");
+            var output = _sql.LoadData<CheckInModel, dynamic>("dbo.spCheckIn_GetAll", new { }, "OHMData");
 
             return output;
         }
@@ -30,9 +28,7 @@ namespace OHMDataManager.Library.DataAccess
 
         public CheckInModel GetCheckIn(ClientInfo cInfo)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            var output = sql.LoadData<CheckInModel, dynamic>("dbo.spCheckInLookUp", new { cInfo.Client, cInfo.Phone }, "OHMData").FirstOrDefault();
+            var output = _sql.LoadData<CheckInModel, dynamic>("dbo.spCheckInLookUp", new { cInfo.Client, cInfo.Phone }, "OHMData").FirstOrDefault();
 
             return output;
         }
@@ -40,9 +36,7 @@ namespace OHMDataManager.Library.DataAccess
 
         public int GetCheckInID(CheckInModel checkIn)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            var output = sql.LoadData<int, dynamic>("dbo.spCheckInIDLookUp", new { checkIn.Client, checkIn.Phone }, "OHMData").FirstOrDefault();
+            var output = _sql.LoadData<int, dynamic>("dbo.spCheckInIDLookUp", new { checkIn.Client, checkIn.Phone }, "OHMData").FirstOrDefault();
 
             return output;
         }
@@ -50,25 +44,19 @@ namespace OHMDataManager.Library.DataAccess
 
         public void SaveCheckIn(CheckInModel checkIn)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            sql.SaveData("dbo.spCheckIn_Insert", checkIn, "OHMData");
+            _sql.SaveData("dbo.spCheckIn_Insert", checkIn, "OHMData");
         }
 
 
         public void UpdateCheckIn(CheckInModel checkIn)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            sql.SaveData("dbo.spCheckIn_Update", checkIn, "OHMData");
+            _sql.SaveData("dbo.spCheckIn_Update", checkIn, "OHMData");
         }
 
 
         public void DeleteCheckIn(int id)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            sql.DeleteData("dbo.spCheckIn_Remove", new { id }, "OHMData");
+            _sql.DeleteData("dbo.spCheckIn_Remove", new { id }, "OHMData");
         }
     }
 }

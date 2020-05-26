@@ -16,11 +16,11 @@ namespace OHMApi.Controllers
     [Authorize(Roles = "Manager")]
     public class SaleController : ControllerBase
     {
-        private readonly IConfiguration _config;
+        private readonly ISaleData _data;
 
-        public SaleController(IConfiguration config)
+        public SaleController(ISaleData data)
         {
-            _config = config;
+            _data = data;
         }
 
 
@@ -28,9 +28,7 @@ namespace OHMApi.Controllers
         [HttpGet]
         public List<SaleReportModel> Get()
         {
-            SaleData data = new SaleData(_config);
-
-            return data.GetSaleReport();
+            return _data.GetSaleReport();
         }
     }
 }

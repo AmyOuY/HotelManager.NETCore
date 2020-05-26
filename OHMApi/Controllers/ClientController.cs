@@ -16,20 +16,18 @@ namespace OHMApi.Controllers
     [Authorize(Roles = "Receptionist")]
     public class ClientController : ControllerBase
     {
-        private readonly IConfiguration _config;
+        private readonly IClientData _data;
 
-        public ClientController(IConfiguration config)
+        public ClientController(IClientData data)
         {
-            _config = config;
+            _data = data;
         }
 
 
         [HttpGet]
         public List<ClientModel> Get()
         {
-            ClientData data = new ClientData(_config);
-
-            return data.GetClients();
+            return _data.GetClients();
         }
 
 
@@ -37,33 +35,28 @@ namespace OHMApi.Controllers
         [HttpPost]
         public int PostForClientID(ClientModel client)
         {
-            ClientData data = new ClientData(_config);
-
-            return data.GetClientID(client);
+            return _data.GetClientID(client);
         }
 
 
         [HttpPost]
         public void Post(ClientModel client)
         {
-            ClientData data = new ClientData(_config);
-            data.SaveClient(client);
+            _data.SaveClient(client);
         }
 
 
         [HttpPut]
         public void Put(int id, ClientModel client)
         {
-            ClientData data = new ClientData(_config);
-            data.UpdateClient(client);
+            _data.UpdateClient(client);
         }
 
 
         [HttpDelete]
         public void Delete(int id)
         {
-            ClientData data = new ClientData(_config);
-            data.DeleteClient(id);
+            _data.DeleteClient(id);
         }
     }
 }

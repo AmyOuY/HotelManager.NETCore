@@ -16,20 +16,18 @@ namespace OHMApi.Controllers
     [Authorize(Roles = "Receptionist,Manager")]
     public class CheckOutController : ControllerBase
     {
-        private readonly IConfiguration _config;
+        private readonly ICheckOutData _data;
 
-        public CheckOutController(IConfiguration config)
+        public CheckOutController(ICheckOutData data)
         {
-            _config = config;
+            _data = data;
         }
 
 
         [HttpPost]
         public void Post(CheckOutModel checkOut)
         {
-            CheckOutData data = new CheckOutData(_config);
-
-            data.SaveCheckOut(checkOut);
+            _data.SaveCheckOut(checkOut);
         }
     }
 }

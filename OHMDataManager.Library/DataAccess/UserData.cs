@@ -9,20 +9,18 @@ using System.Threading.Tasks;
 
 namespace OHMDataManager.Library.DataAccess
 {
-    public class UserData
+    public class UserData : IUserData
     {
-        private readonly IConfiguration _config;
+        private readonly ISqlDataAccess _sql;
 
-        public UserData(IConfiguration config)
+        public UserData(ISqlDataAccess sql)
         {
-            _config = config;
+            _sql = sql;
         }
 
         public UserModel GetUserById(string Id)
         {
-            SqlDataAccess sql = new SqlDataAccess(_config);
-
-            var output = sql.LoadData<UserModel, dynamic>("dbo.spUserLookUp", new { Id }, "OHMData").FirstOrDefault();
+            var output = _sql.LoadData<UserModel, dynamic>("dbo.spUserLookUp", new { Id }, "OHMData").FirstOrDefault();
 
             return output;
         }
