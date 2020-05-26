@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using OHMApi.Data;
 using OHMApi.Models;
 using OHMDataManager.Library.DataAccess;
@@ -23,14 +24,17 @@ namespace OHMApi.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IUserData _data;
+        private readonly ILogger<UserController> _logger;
 
         public UserController(ApplicationDbContext context,
                               UserManager<IdentityUser> userManager,
-                              IUserData data)
+                              IUserData data,
+                              ILogger<UserController> logger)
         {
             _context = context;
             _userManager = userManager;
             _data = data;
+            _logger = logger;
         }
 
 
@@ -90,8 +94,12 @@ namespace OHMApi.Controllers
         [Route("Admin/AddRole")]
         public async Task AddRole(UserRolePairModel pair)
         {
+            var loggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var user = await _userManager.FindByIdAsync(pair.UserId);
+
+            _logger.LogInformation("Admin {Admin} added user {User} to role {Role}",
+                loggedInUserId, user.Id, pair.RoleName);
 
             await _userManager.AddToRoleAsync(user, pair.RoleName);
             
@@ -103,7 +111,12 @@ namespace OHMApi.Controllers
         [Route("Admin/RemoveRole")]
         public async Task RemoveRole(UserRolePairModel pair)
         {
+            var loggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var user = await _userManager.FindByIdAsync(pair.UserId);
+
+            _logger.LogInformation("Admin {Admin} removed user {User} from role {Role}",
+                loggedInUserId, user.Id, pair.RoleName);
 
             await _userManager.RemoveFromRoleAsync(user, pair.RoleName);
             
