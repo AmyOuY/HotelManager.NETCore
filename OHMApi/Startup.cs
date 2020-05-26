@@ -60,9 +60,7 @@ namespace OHMApi
 
             services.AddSwaggerGen(setup => 
             {
-                setup.SwaggerDoc(
-                    "v1",
-                    new OpenApiInfo
+                setup.SwaggerDoc("v1", new OpenApiInfo
                     {
                         Title = "YmOU Hotel Manager API",
                         Version = "v1"
@@ -70,11 +68,12 @@ namespace OHMApi
                 );
 
                 setup.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = "JWT Authentication Header using the Bearer Scheme. Example: \"Authentication: Bearer {token}\"",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header
-                });
+                    {
+                        Description = "JWT Authentication Header using the Bearer Scheme. Example: \"Authentication: Bearer {token}\"",
+                        Name = "Authorization",
+                        In = ParameterLocation.Header
+                    }
+                );
 
 
                 setup.AddSecurityRequirement(new OpenApiSecurityRequirement()

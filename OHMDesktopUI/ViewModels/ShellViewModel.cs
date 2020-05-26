@@ -5,8 +5,10 @@ using OHMDesktopUI.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OHMDesktopUI.ViewModels
@@ -27,25 +29,10 @@ namespace OHMDesktopUI.ViewModels
             _events = events;
             _user = user;
             _apiHelper = apiHelper;
-            _events.Subscribe(this);
-            ActivateItem(IoC.Get<LoginViewModel>());
+            _events.SubscribeOnPublishedThread(this);
+            ActivateItemAsync(IoC.Get<LoginViewModel>(), new CancellationToken());
         }
 
-
-        public void Handle(LogOnEvent message)
-        {
-            ActivateItem(IoC.Get<BlankViewModel>());
-            NotifyOfPropertyChange(() => IsLoggedIn);
-            NotifyOfPropertyChange(() => IsLoggedOut);
-        }
-
-
-        public void Handle(SwitchToLogInEvent message)
-        {
-            ActivateItem(_checkInVM);
-            _checkInVM.Client = message.Client;
-            _checkInVM.Phone = message.Phone;
-        }
 
 
         public bool IsLoggedIn
@@ -75,55 +62,71 @@ namespace OHMDesktopUI.ViewModels
 
         public void ExitApplication()
         {
-            TryClose();
+            TryCloseAsync();
         }
 
 
-        public void LogIn()
+        public async Task LogIn()
         {
-            ActivateItem(IoC.Get<LoginViewModel>());
+            await ActivateItemAsync(IoC.Get<LoginViewModel>(), new CancellationToken());
             
         }
 
 
-        public void LogOut()
+        public async Task LogOut()
         {
             _user.ResetUser();
             _apiHelper.LogOffUser();
-            ActivateItem(IoC.Get<LoginViewModel>());
+            await ActivateItemAsync(IoC.Get<LoginViewModel>(), new CancellationToken());
             NotifyOfPropertyChange(() => IsLoggedIn);
             NotifyOfPropertyChange(() => IsLoggedOut);
         }
 
 
 
-        public void UserManagement()
+        public async Task UserManagement()
         {
-            ActivateItem(IoC.Get<UserDisplayViewModel>());
+            await ActivateItemAsync(IoC.Get<UserDisplayViewModel>(), new CancellationToken());
         }
 
 
-        public void Room()
+        public async Task Room()
         {
-            ActivateItem(IoC.Get<RoomViewModel>());
+            await ActivateItemAsync(IoC.Get<RoomViewModel>(), new CancellationToken());
         }
 
 
-        public void Client()
+        public async Task Client()
         {
-            ActivateItem(IoC.Get<ClientViewModel>());
+            await ActivateItemAsync(IoC.Get<ClientViewModel>(), new CancellationToken());
         }
 
 
-        public void CheckIn()
+        public async Task CheckIn()
         {
-            ActivateItem(IoC.Get<CheckInViewModel>());
+            await ActivateItemAsync(IoC.Get<CheckInViewModel>(), new CancellationToken());
         }
 
 
-        public void CheckOut()
+        public async Task CheckOut()
         {
-            ActivateItem(IoC.Get<CheckOutViewModel>());
+            await ActivateItemAsync(IoC.Get<CheckOutViewModel>(), new CancellationToken());
+        }
+
+        public async Task HandleAsync(LogOnEvent message, CancellationToken cancellationToken)
+        {
+            
+            await ActivateItemAsync(IoC.Get<BlankViewModel>(), cancellationToken);
+            NotifyOfPropertyChange(() => IsLoggedIn);
+            NotifyOfPropertyChange(() => IsLoggedOut);
+            
+        }
+
+        public async Task HandleAsync(SwitchToLogInEvent message, CancellationToken cancellationToken)
+        {
+            await ActivateItemAsync (_checkInVM, cancellationToken);
+            _checkInVM.Client = message.Client;
+            _checkInVM.Phone = message.Phone;
         }
     }
 }
