@@ -17,8 +17,8 @@
 <hr>
 <h3> Token Authorization </h3>
 <p>
-<img src="./Images/login1.png" width="500">
-<img src="./Images/login2.png" width="500">
+<img src="./Images/login1.png" width="400">
+<img src="./Images/login2.png" width="400">
 </p>
 
 <hr>
