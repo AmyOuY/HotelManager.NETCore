@@ -19,8 +19,10 @@
 
 <h3> Token Authorization </h3>
 <hr>
+<p float="left>
 <img src="./Images/login1.png" width="500">
 <img src="./Images/login2.png" width="500">
+</p>
 
 
 <h3> Authorized Access of Data </h3>
