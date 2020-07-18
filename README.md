@@ -6,25 +6,21 @@
   <li> User Authentication and Authorization was implemented with JSON Web Token (<strong>JWT</strong>) and Swagger. </li>
 </ul>
 
-
-<h3> API Endpoints </h3>
 <hr>
+<h3> API Endpoints </h3>
 <img src="./JWTSwagger.png">
 
-
-<h3> Token Authentication</h3>
 <hr>
+<h3> Token Authentication</h3>
 <img src="./Images/getToken.png">
 
-
-<h3> Token Authorization </h3>
 <hr>
+<h3> Token Authorization </h3>
 <p>
 <img src="./Images/login1.png" width="500">
 <img src="./Images/login2.png" width="500">
 </p>
 
-
-<h3> Authorized Access of Data </h3>
 <hr>
+<h3> Authorized Access of Data </h3>
 <img src="./Images/authorizedDataAccess.png">
