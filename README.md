@@ -14,15 +14,15 @@
 
 <h3> Token Authentication</h3>
 <hr>
-<img src="./token.png">
+<img src="./images/token.png">
 
 
 <h3> Token Authorization </h3>
 <hr>
-<img src="./login1.png">
-<img src="./login2.png">
+<img src="./images/login1.png">
+<img src="./images/login2.png">
 
 
 <h3> Authorized Access of Data </h3>
 <hr>
-<img src="./JWTSwagger.png">
+<img src="./images/authorizedDataAccess.png">
