@@ -14,13 +14,13 @@
 
 <h3> Token Authentication</h3>
 <hr>
-<img src="./Images/token.png">
+<img src="./Images/getToken.png">
 
 
 <h3> Token Authorization </h3>
 <hr>
-<img src="./Images/login1.png">
-<img src="./Images/login2.png">
+<img src="./Images/login1.png" width="500">
+<img src="./Images/login2.png" width="500">
 
 
 <h3> Authorized Access of Data </h3>
