@@ -7,5 +7,22 @@
 </ul>
 
 
---------JWT is used for User authentication and permission--------
+<h3> API Endpoints </h3>
+<hr>
+<img src="./JWTSwagger.png">
+
+
+<h3> Token Authentication</h3>
+<hr>
+<img src="./token.png">
+
+
+<h3> Token Authorization </h3>
+<hr>
+<img src="./login1.png">
+<img src="./login2.png">
+
+
+<h3> Authorized Access of Data </h3>
+<hr>
 <img src="./JWTSwagger.png">
