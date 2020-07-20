@@ -1,4 +1,4 @@
-# Hotel Management System (.NET Core)
+# Hotel Management System (C# .NET Core)
 
 <ul>
   <li> Upgraded the Hotel Management app from .NET Framework4.7 to .NET Core3.1. </li>
