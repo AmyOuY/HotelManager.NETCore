@@ -27,17 +27,17 @@
 
 
 <hr />
-<h3> Only authorized user can access the data </h3>
+<h3> Only authorized user can access data in the API Endpoints </h3>
 <img src="./Images/authorizedDataAccess.png">
 
 
 <hr />
-<h3>Successful login allows the display of app menus on top of the shell window</h3>
+<h3> Successful login allows the display of app menus on top of the shell window </h3>
 <img src="./Images/Login.png">
 
 
 <hr />
-<h3>Only User with Admin role is allowed to manage the User Roles </h3>
+<h3> Only User with Admin role is allowed to manage the User Roles </h3>
 <img src="./Images/User.png">
 
 
@@ -62,7 +62,7 @@
 
 
 <hr />
-<h3> Select one room type from the Room Type drop-down will display the available rooms of the chosen type in the Room Number drop-down. When a room number is chosen, the corresponding room capacity and price info will be automatically filled. </h3>
+<h3> Select one room type from the Room Type drop-down list will display the available rooms of the chosen type in the Room Number drop-down list. When a room number is chosen, the corresponding room capacity and price info will be automatically filled in. </h3>
 <img src="./Images/checkIn.png">
 
 
