@@ -10,7 +10,7 @@
 
 <hr />
 <h3> Swagger was used to document the Web API Endpoints</h3>
-<img src="./JWTSwagger.png">
+<img src="./Images/JWTSwagger.png">
  
  
 <hr />
@@ -51,17 +51,18 @@
 <img src="./Images/room.png">
 
 
-<h3> Client View displays all client information and allows Add, Edit and Remove client information from the table and SQL database. Select a client in the table and click the "Switch To Check In" button allows switching to the CheckIn View and automatically filling in available CheckIn information for the selected client. </h3>
+<hr />
+<h3> Client View displays all client information and allows Add, Edit and Remove client information from the table and SQL database. Selecting a client in the table and clicking the "Switch To Check In" button allows switching to the CheckIn View and automatically filling in available CheckIn information for the selected client. </h3>
 <img src="./Images/client.png">
 
 
 <hr />
-<h3> CheckIn View allows displaying information for already checked-in client if typing in the client name. For new checkIn, client needs to register in Client view first and then fill in required information to check in. CheckIn View also allows clearing the filled-in fields and removing CheckIn information from the SQL database. </h3>
+<h3> CheckIn View allows displaying information for an already checked-in client if typing in the client name. For new checkIn, client needs to register in Client view first and then fill in required information to check in. CheckIn View also allows clearing the filled-in fields and removing CheckIn information from the SQL database. </h3>
 <img src="./Images/checkedIn.png">
 
 
 <hr />
-<h3> Select one room type from the Type drop-down will display the available rooms of the chosen type in the Number drop-down. When a room number is chosen, the corresponding room capacity and price info will be automatically filled. </h3>
+<h3> Select one room type from the Room Type drop-down will display the available rooms of the chosen type in the Room Number drop-down. When a room number is chosen, the corresponding room capacity and price info will be automatically filled. </h3>
 <img src="./Images/checkIn.png">
 
 
