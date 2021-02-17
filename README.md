@@ -1,10 +1,10 @@
 # Hotel Management System (C# .NET Core)
 <ul>
-  <li> A desktop application built with .NET Framework4.7 that allows managing User Data Access, Hotel Rooms, Clients, Check-ins, Checkouts and Check in/out Reports with Authentication and Role Based Authorization. </li>
+  <li> A desktop application originally built with .NET Framework4.7 that allows managing Hotel Rooms, Clients, Check-ins, Checkouts, Check in/out Reports and User Data Access with Authentication and Role Based Authorization. </li>
   <li> Front-end was implemented with Windows Presentation Foundation (<strong>WPF</strong>) using Caliburn Micro's MVVM pattern and Dependency Injection container. </li>
   <li> A middle Web API layer that services the front-end was created using ASP.NET MVC and Web API, Authentication and Authorization with Swagger documentation, and Async/Await. </li>
-  <li> Back-end data was managed by Microsoft SQL Server and stored/accessed through Class Library using Dapper as Object Relational Mapper (ORM) . </li> 
-  <li> Upgraded the application from .NET Framework4.7 to .NET Core3.1 and implemented Dependency Injection in the middle Web API layer using ASP.NET Core's built-in service container and Authentication and Authorization using JSON Web Token (<strong>JWT</strong>).</li>
+  <li> Back-end data was managed by Microsoft SQL Server and stored/accessed through Class Library using Dapper as Object Relational Mapper (ORM). </li> 
+  <li> Upgraded the application to .NET Core3.1 and implemented Dependency Injection in the middle Web API layer using ASP.NET Core's built-in service container and Authentication and Authorization using JSON Web Token (<strong>JWT</strong>). </li>
 </ul>
 
 
@@ -32,7 +32,7 @@
 
 
 <hr />
-<h3> Successful login allows the display of app menus on top of the shell window </h3>
+<h3> Successful login allows displaying app menus on top of the shell window </h3>
 <img src="./Images/Login.png">
 
 
