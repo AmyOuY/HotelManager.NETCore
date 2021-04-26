@@ -41,6 +41,8 @@ namespace OHMApi
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            services.AddControllers().AddNewtonsoftJson();
+
             // Personal services
             services.AddTransient<ISqlDataAccess, SqlDataAccess>();
             services.AddTransient<ICheckInData, CheckInData>();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -45,6 +46,71 @@ namespace OHMApi.Controllers
 
             return _data.GetUserById(userId);
         }
+
+
+        public class UserRegistrationModel
+        {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string Email { get; set; }
+            public string Password { get; set; }
+
+            public UserRegistrationModel(string firstName, string lastName, string email, string password)
+            {
+                FirstName = firstName;
+                LastName = lastName;
+                Email = email;
+                Password = password;
+            }
+        }
+
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("Register")]
+        public async Task<IActionResult> Register(UserRegistrationModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingUser = await _userManager.FindByEmailAsync(user.Email);
+                if (existingUser is null)
+                {
+                    IdentityUser newUser = new IdentityUser
+                    {
+                        Email = user.Email,
+                        EmailConfirmed = true,
+                        UserName = user.Email
+                    };
+
+                    IdentityResult result = await _userManager.CreateAsync(newUser, user.Password);
+                    
+                    if (result.Succeeded)
+                    {
+                        existingUser = await _userManager.FindByEmailAsync(user.Email);
+                        if (existingUser is null)
+                        {
+                            return BadRequest();
+                        }
+
+                        UserModel u = new UserModel{ 
+                            Id = existingUser.Id,
+                            FirstName = user.FirstName,
+                            LastName = user.LastName,
+                            Email = user.Email
+                        };
+
+                        _data.CreateUser(u);
+                        return Ok();
+                    }
+                }
+            }
+
+            return BadRequest();
+        }
+
+
+        
 
 
         [Authorize(Roles = "Admin")]

@@ -15,17 +15,14 @@ namespace OHMDesktopUI.ViewModels
 {
     public class ShellViewModel : Conductor<object>, IHandle<LogOnEvent>, IHandle<SwitchToLogInEvent>
     {
-        private readonly CheckInViewModel _checkInVM;
         private readonly IEventAggregator _events;
         private readonly ILoggedInUser _user;
         private readonly IAPIHelper _apiHelper;
 
-        public ShellViewModel(CheckInViewModel checkInVM,
-                              IEventAggregator events,
+        public ShellViewModel(IEventAggregator events,
                               ILoggedInUser user,
                               IAPIHelper apiHelper)
         {
-            _checkInVM = checkInVM;
             _events = events;
             _user = user;
             _apiHelper = apiHelper;
@@ -124,9 +121,12 @@ namespace OHMDesktopUI.ViewModels
 
         public async Task HandleAsync(SwitchToLogInEvent message, CancellationToken cancellationToken)
         {
-            await ActivateItemAsync (_checkInVM, cancellationToken);
-            _checkInVM.Client = message.Client;
-            _checkInVM.Phone = message.Phone;
+            CheckInViewModel checkInVM = IoC.Get<CheckInViewModel>();
+            checkInVM.Client = message.Client;
+            checkInVM.Phone = message.Phone;
+
+            await ActivateItemAsync(checkInVM, cancellationToken);
+            
         }
     }
 }

@@ -5,5 +5,6 @@ namespace OHMDataManager.Library.DataAccess
     public interface IUserData
     {
         UserModel GetUserById(string Id);
+        void CreateUser(UserModel user);
     }
 }
